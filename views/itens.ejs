@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <% for(let post of posts){ %>
+        <div style="border-top: 1px solid black; margin-top: 50px; width: 35vw">
+            <h3>Id do Item: <%= post._id %></h3>
+            <h3>Tipo: <%= post.tipo %></h3>
+            <h3>Marca: <%= post.opcoes[0].marca %></h3>
+            <h3>Modelo: <%= post.opcoes[0].modelo %></h3>
+            <h3>Preço : <%= post.opcoes[0].preco %></h3>
+            <h3>Id do cliente: <%= post.idCliente %></h3>
+        </div>
+    <% } %>
+</body>
+</html>
