@@ -108,7 +108,6 @@ app.delete('/apiitens/:id', (req, res) => {
     });
 });
 
-
 // Update status aprovado
 
 app.post('/updateitem', (req, res) => {
@@ -161,6 +160,43 @@ app.get('/itenscompras', (req, res) => {
     req.db.collection('itens').find({"opcoes": {$elemMatch: {"status": 'analise'} }}
     ).toArray((err, itensCompras) => {
         res.send(itensCompras);
+    });
+});
+
+
+// Postar novos projetos
+
+app.post('/apiprojetos', (req, res) => {
+    let busca = {
+        clienteId: req.body.clienteId,
+        ambiente: req.body.ambiente,
+        tipo: req.body.tipo
+    };
+
+    req.db.collection('projetos').findOne(busca, (err, dadosDoBanco) => {
+        if(dadosDoBanco){
+            let novaOpcao = req.body.opcoes[0];
+            dadosDoBanco.opcoes.push(novaOpcao);
+
+            req.db.collection('projetos').update(busca, dadosDoBanco, (err, dadosAtualizados) => {
+                res.send(dadosAtualizados);
+            });
+        }else{
+            req.db.collection('projetos').insert(req.body, (err, dadosInseridos) => {
+                res.send(dadosInseridos);
+            });
+        }
+    });
+
+    
+});
+
+
+// Pegar projetos
+
+app.get('/apiprojetos', (req, res) => {
+    req.db.collection('projetos').find({}).toArray((err, dados) => {
+        res.send(dados);
     });
 });
 
